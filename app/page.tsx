@@ -10,10 +10,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 export default function PetOrkut() {
   const [currentUser, setCurrentUser] = useState(null)
   const [activeSection, setActiveSection] = useState("home")
-  const [pets, setPets] = useState([])
-  const [communities, setCommunities] = useState([])
-  const [testimonials, setTestimonials] = useState([])
-  const [photos, setPhotos] = useState([])
+  const [pets, setPets] = useState<any[]>([])
+  const [communities, setCommunities] = useState<any[]>([])
+  const [testimonials, setTestimonials] = useState<any[]>([])
+  const [photos, setPhotos] = useState<any[]>([])
+
+  const demo = (feature: string) => {
+    alert(`PetOrkut v0.1 (protótipo) — "${feature}" ainda está em construção 💙🐾`)
+  }
 
   // Dados mockados para demonstração
   useEffect(() => {
@@ -130,13 +134,34 @@ export default function PetOrkut() {
           <Input
             placeholder="Buscar pets..."
             className="w-48 bg-white/20 border-white/30 text-white placeholder:text-white/70"
+            onFocus={() => demo("Busca")}
           />
-          <Button variant="secondary" size="sm">
+          <Button variant="secondary" size="sm" onClick={() => demo("Entrar")}>
             Entrar
           </Button>
         </div>
       </div>
     </header>
+  )
+
+  const PrototypeBanner = () => (
+    <div className="container mx-auto px-4 mt-6">
+      <Card className="pet-card-hover">
+        <CardContent className="py-4">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+            <div>
+              <p className="font-semibold">Protótipo v0.1 — ideia registrada 💙🐾</p>
+              <p className="text-sm text-muted-foreground">
+                Ainda sem login e sem funções reais: é um mockup para guardar a visão do projeto.
+              </p>
+            </div>
+            <Badge variant="secondary" className="w-fit">
+              DEMO
+            </Badge>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   )
 
   const HomeSection = () => (
@@ -201,7 +226,9 @@ export default function PetOrkut() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-bold text-primary">Perfis dos Pets</h2>
-        <Button className="bg-accent hover:bg-accent/90">Cadastrar Pet</Button>
+        <Button className="bg-accent hover:bg-accent/90" onClick={() => demo("Cadastrar Pet")}>
+          Cadastrar Pet
+        </Button>
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -224,10 +251,15 @@ export default function PetOrkut() {
                 <Badge variant="outline">{pet.friends} amigos</Badge>
               </div>
               <div className="flex gap-2 mt-4">
-                <Button size="sm" className="flex-1">
+                <Button size="sm" className="flex-1" onClick={() => demo("Adicionar amigo")}>
                   Adicionar
                 </Button>
-                <Button size="sm" variant="outline" className="flex-1 bg-transparent">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="flex-1 bg-transparent"
+                  onClick={() => demo("Enviar depoimento")}
+                >
                   Depoimento
                 </Button>
               </div>
@@ -242,7 +274,9 @@ export default function PetOrkut() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-bold text-primary">Comunidades</h2>
-        <Button className="bg-accent hover:bg-accent/90">Criar Comunidade</Button>
+        <Button className="bg-accent hover:bg-accent/90" onClick={() => demo("Criar Comunidade")}>
+          Criar Comunidade
+        </Button>
       </div>
 
       <div className="community-grid">
@@ -255,7 +289,9 @@ export default function PetOrkut() {
             <CardContent className="text-center">
               <p className="text-2xl font-bold text-primary mb-2">{community.members.toLocaleString()}</p>
               <p className="text-sm text-muted-foreground mb-4">membros</p>
-              <Button className="w-full">Participar</Button>
+              <Button className="w-full" onClick={() => demo(`Participar: ${community.name}`)}>
+                Participar
+              </Button>
             </CardContent>
           </Card>
         ))}
@@ -267,7 +303,9 @@ export default function PetOrkut() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-bold text-primary">Álbum de Fotos</h2>
-        <Button className="bg-accent hover:bg-accent/90">Adicionar Foto</Button>
+        <Button className="bg-accent hover:bg-accent/90" onClick={() => demo("Adicionar Foto")}>
+          Adicionar Foto
+        </Button>
       </div>
 
       <div className="photo-masonry">
@@ -278,10 +316,10 @@ export default function PetOrkut() {
               <div className="p-3">
                 <p className="text-sm font-medium">{photo.caption}</p>
                 <div className="flex gap-2 mt-2">
-                  <Button size="sm" variant="ghost" className="text-xs">
+                  <Button size="sm" variant="ghost" className="text-xs" onClick={() => demo("Curtir")}>
                     ❤️ Curtir
                   </Button>
-                  <Button size="sm" variant="ghost" className="text-xs">
+                  <Button size="sm" variant="ghost" className="text-xs" onClick={() => demo("Comentar")}>
                     💬 Comentar
                   </Button>
                 </div>
@@ -309,7 +347,7 @@ export default function PetOrkut() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-
+      <PrototypeBanner />
       <main className="container mx-auto px-4 py-8">{renderSection()}</main>
 
       <footer className="bg-card border-t mt-16 py-8">
@@ -321,3 +359,4 @@ export default function PetOrkut() {
     </div>
   )
 }
+
